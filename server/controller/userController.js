@@ -86,7 +86,7 @@ exports.postUpdate = async ctx => {
     return ctx.throw(500, err);
   }
 
-  ctx.redirect("https://https://devlog-test2.herokuapp.com");
+  ctx.redirect("https://devlog-test2.herokuapp.com");
 };
 
 exports.imageUpload = async ctx => {
