@@ -66,7 +66,6 @@ exports.postList = async ctx => {
 exports.postUpdate = async ctx => {
   const { email } = ctx.params;
   console.log(email);
-  console.log(`파일리스트: ${ctx.request.files.thumnail.path}`);
 
   const { title, content } = ctx.request.body;
   const thumnail =
@@ -74,6 +73,7 @@ exports.postUpdate = async ctx => {
       ? null
       : ctx.request.files.thumnail.path;
 
+  console.log(`파일경로: ${thumnail}}`);
   try {
     await User.findOneAndUpdate(
       { email },
