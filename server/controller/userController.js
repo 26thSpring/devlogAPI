@@ -66,7 +66,8 @@ exports.postList = async ctx => {
 exports.postUpdate = async ctx => {
   const { email } = ctx.params;
   console.log(email);
-  console.log(`파일리스트: ${ctx.request.files}`);
+  console.log(`파일리스트: ${ctx.request.files.thumnail}`);
+  console.log(`파일리스트: ${ctx.request.files[0]}`);
 
   const { title, content } = ctx.request.body;
   const thumnail =
