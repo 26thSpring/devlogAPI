@@ -95,8 +95,6 @@ exports.imageUpload = async ctx => {
   const image = ctx.request.files.images;
   const path = image.path.split("/")[2];
   ctx.body = `
-      <img style="object-fit: cover;" src="https://api-devlog.herokuapp.com/${path}" alt="${
-    image.name
-  }" />
+      <img src="https://api-devlog.herokuapp.com/${path}" alt="${image.name}" />
    `;
 };
