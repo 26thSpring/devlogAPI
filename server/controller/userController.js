@@ -73,7 +73,7 @@ exports.postUpdate = async ctx => {
       ? null
       : ctx.request.files.thumnail.path;
 
-  console.log(`파일경로: ${thumnail}}`);
+  console.log(`파일경로: ${thumnail}`);
   try {
     await User.findOneAndUpdate(
       { email },
@@ -93,10 +93,8 @@ exports.postUpdate = async ctx => {
 exports.imageUpload = async ctx => {
   console.log(`파일!!!${ctx.request.files.images.path}`);
   const image = ctx.request.files.images;
-
+  const path = image.path.split("/")[2];
   ctx.body = `
-      <img src="https://api-devlog.herokuapp.com/${image.path}" alt="${
-    image.name
-  }" />
+      <img src="https://api-devlog.herokuapp.com/${path}" alt="${image.name}" />
    `;
 };
