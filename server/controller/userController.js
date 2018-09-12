@@ -98,3 +98,22 @@ exports.imageUpload = async ctx => {
       <img src="https://api-devlog.herokuapp.com/${path}" alt="${image.name}" />
    `;
 };
+
+exports.postView = async ctx => {
+  let post;
+  const id = ObjectId(ctx.params.post_id);
+  console.log(id);
+  console.log(ctx.params.name);
+  try {
+    post = await User.findOne(
+      {
+        nickname: ctx.params.name
+      },
+      { posts: { $elemMatch: { _id: id } } }
+    );
+  } catch (err) {
+    return ctx.throw(500, err);
+  }
+  console.log(post);
+  ctx.body = post;
+};

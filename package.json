@@ -5,12 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "@koa/cors": "^2.2.2",
-    "koa": "^2.5.2",
+    "koa": "^2.5.3",
     "koa-body": "^4.0.4",
     "koa-json": "^2.0.2",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "mongoose": "^5.2.13"
+    "mongoose": "^5.2.13",
+    "pm2": "^3.1.2"
   },
   "scripts": {
     "start": "node server/router/api.js"

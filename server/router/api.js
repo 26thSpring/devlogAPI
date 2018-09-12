@@ -52,13 +52,15 @@ router.get("/api/users/:email", userCtlr.get);
 
 router.post("/api/users", userCtlr.create);
 
-router.get("/api/posts/:email", userCtlr.postList);
+router.get("/api/posts/:email", userCtlr.postList); // 해당 유저 포스트 목록 get
 
-router.post("/api/posts/:email", userCtlr.postUpdate);
+router.post("/api/posts/:email", userCtlr.postUpdate); // 해당 유저 포스트 추가
 
-router.post("/api/posts", userCtlr.imageUpload);
+router.post("/api/posts", userCtlr.imageUpload); // 이미지 업로드
 
-router.put("/api/posts/:email", userCtlr.imageUpload);
+// router.put("/api/posts/:email", userCtlr.imageUpload);
+
+router.get("/api/post/:name/:post_id", userCtlr.postView);  // 해당 유저 해당 포스트 get
 
 app.use(router.routes());
 app.use(router.allowedMethods());
