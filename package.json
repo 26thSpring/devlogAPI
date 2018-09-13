@@ -5,6 +5,9 @@
   "license": "MIT",
   "dependencies": {
     "@koa/cors": "^2.2.2",
+    "dotenv": "^6.0.0",
+    "joi": "^13.6.0",
+    "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.3",
     "koa-body": "^4.0.4",
     "koa-json": "^2.0.2",

@@ -6,12 +6,15 @@ const path = require("path");
 const json = require("koa-json");
 const cors = require("@koa/cors");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const app = new Koa();
 const router = new Router();
 const port = process.env.PORT || 3002;
 
 const userCtlr = require("../controller/userController");
+const authCtlr = require("../controller/authController");
 
 app.use(serve(path.resolve(__dirname, "../uploads")));
 
@@ -60,9 +63,28 @@ router.post("/api/posts", userCtlr.imageUpload); // 이미지 업로드
 
 // router.put("/api/posts/:email", userCtlr.imageUpload);
 
-router.get("/api/post/:name/:post_id", userCtlr.postView);  // 해당 유저 해당 포스트 get
+router.get("/api/post/:name/:post_id", userCtlr.postView); // 해당 유저 해당 포스트 get
+
+//▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ auth route ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼//
+router.post("/api/auth/register/local", authCtlr.localRegister);
+router.post("/api/auth/login/local", authCtlr.localLogin);
+router.get("/api/auth/exists/:key(email|id)/:value", authCtlr.exists);
+router.post("/api/auth/logout", authCtlr.localRegister);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+const token = jwt.sign(
+  { foo: "bar" },
+  process.env.JWT_SECRET,
+  { expiresIn: "7d" },
+  (err, token) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(token);
+  }
+);
 
 app.listen(port, () => console.log(`API on ${port}`));
