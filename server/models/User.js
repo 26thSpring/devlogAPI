@@ -3,8 +3,12 @@ const { generateToken } = require("../lib/token");
 
 const userSchema = new mongoose.Schema({
   email: { type: String },
-  username: String,
-  profile: { name: String, thumnail: String, introduce: String },
+  profile: {
+    name: String,
+    nickname: String,
+    thumnail: String,
+    introduce: String
+  },
   posts: [
     {
       title: { type: String },

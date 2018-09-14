@@ -5,18 +5,23 @@ const User = require("../models/User");
 exports.localRegister = async ctx => {
   // 데이터 검증
   const schema = Joi.object().keys({
-    username: Joi.string()
+    nickname: Joi.string()
       .alphanum()
-      .min(4)
+      .min(3)
       .max(15)
       .required(),
     email: Joi.string()
       .email()
-      .required(),
-    password: Joi.string()
       .required()
-      .min(6)
   });
+
+  const result = Joi.validate(ctx.request.body, schema);
+
+  // 스키마 검증 실패
+  if (result.error) {
+    ctx.status = 400;
+    return;
+  }
 
   ctx.body = "register";
 };
