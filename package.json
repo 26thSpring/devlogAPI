@@ -14,9 +14,10 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "mongoose": "^5.2.13",
+    "nodemon": "^1.18.4",
     "pm2": "^3.1.2"
   },
   "scripts": {
-    "start": "node server/router/api.js"
+    "start": "nodemon server/router/api.js"
   }
 }

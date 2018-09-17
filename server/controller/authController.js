@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 // 로컬 회원가입
@@ -12,7 +13,8 @@ exports.localRegister = async ctx => {
       .required(),
     email: Joi.string()
       .email()
-      .required()
+      .required(),
+    thumnail: Joi.string()
   });
 
   const result = Joi.validate(ctx.request.body, schema);
@@ -28,7 +30,34 @@ exports.localRegister = async ctx => {
 
 // 로컬 로그인
 exports.localLogin = async ctx => {
-  ctx.body = "login";
+  const { email } = ctx.request.body;
+  let user;
+  let user_profile;
+
+  try {
+    user = await User.findOne({ email });
+  } catch (err) {
+    return ctx.throw(500, err);
+  }
+
+  if (!user) {
+    ctx.status = 404;
+    return;
+  }
+
+  let token = null;
+  try {
+    token = await user.generateToken();
+  } catch (err) {
+    ctx.throw(500, err);
+  }
+
+  ctx.cookis.set("access-token", token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 3 // 3일
+  });
+
+  ctx.body = user;
 };
 
 // 이메일 / 아이디 존재 유무 확인

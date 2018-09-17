@@ -63,7 +63,7 @@ router.post("/api/posts", userCtlr.imageUpload); // 이미지 업로드
 
 // router.put("/api/posts/:email", userCtlr.imageUpload);
 
-router.get("/api/post/:name/:post_id", userCtlr.postView); // 해당 유저 해당 포스트 get
+router.get("/api/post/:nickname/:post_id", userCtlr.postView); // 해당 유저 해당 포스트 get
 
 //▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ auth route ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼//
 router.post("/api/auth/register/local", authCtlr.localRegister);

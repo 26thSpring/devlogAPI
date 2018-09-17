@@ -103,11 +103,11 @@ exports.postView = async ctx => {
   let post;
   const id = ObjectId(ctx.params.post_id);
   console.log(id);
-  console.log(ctx.params.name);
+  console.log(ctx.params.nickname);
   try {
     post = await User.findOne(
       {
-        nickname: ctx.params.name
+        profile: { nickname: ctx.params.nickname }
       },
       { posts: { $elemMatch: { _id: id } } }
     );

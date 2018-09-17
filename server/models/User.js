@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
     thumnail: String,
     introduce: String
   },
+  social: {
+    google: {
+      id: String,
+      accessToken: String
+    }
+  },
   posts: [
     {
       title: { type: String },
@@ -24,11 +30,12 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.generateToken = () => {
   // JWT 에 담을 내용
   const payload = {
-    _id: this._id,
-    profile: this.profile
+    id: this._id,
+    thumnail: this.profile.thumnail,
+    nickname: this.profile.nickname
   };
 
-  return generateToken(payload, "account");
+  return generateToken(payload, "user");
 };
 
 module.exports = mongoose.model("User", userSchema, "user");
