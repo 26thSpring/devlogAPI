@@ -52,7 +52,7 @@ exports.localLogin = async ctx => {
     ctx.throw(500, err);
   }
 
-  ctx.cookis.set("access-token", token, {
+  ctx.cookies.set("access-token", token, {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 3 // 3일
   });
@@ -67,5 +67,21 @@ exports.exists = async ctx => {
 
 // 로그아웃
 exports.logout = async ctx => {
-  ctx.body = "logout";
+  ctx.cookies.set("access_token", null, {
+    maxAge: 0,
+    httpOnly: true
+  });
+
+  ctx.status = 204;
+};
+
+exports.check = ctx => {
+  const { user } = ctx.request;
+
+  if (!user) {
+    ctx.status = 403; // forbidden
+    return;
+  }
+
+  ctx.body = user;
 };

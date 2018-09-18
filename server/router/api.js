@@ -16,6 +16,8 @@ const port = process.env.PORT || 3002;
 const userCtlr = require("../controller/userController");
 const authCtlr = require("../controller/authController");
 
+const { jwtMiddleware } = require("../lib/token");
+
 app.use(serve(path.resolve(__dirname, "../uploads")));
 
 app.use(
@@ -37,6 +39,7 @@ app.use(
 );
 app.use(json());
 app.use(cors());
+app.use(jwtMiddleware);
 
 const mongoUrl =
   "mongodb://ook:cksdnr112!@devlog-shard-00-00-jyyxp.mongodb.net:27017,devlog-shard-00-01-jyyxp.mongodb.net:27017,devlog-shard-00-02-jyyxp.mongodb.net:27017/test?ssl=true&replicaSet=devlog-shard-0&authSource=admin&retryWrites=true";
@@ -66,10 +69,11 @@ router.post("/api/posts", userCtlr.imageUpload); // 이미지 업로드
 router.get("/api/post/:nickname/:post_id", userCtlr.postView); // 해당 유저 해당 포스트 get
 
 //▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ auth route ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼//
-router.post("/api/auth/register/local", authCtlr.localRegister);
-router.post("/api/auth/login/local", authCtlr.localLogin);
+router.post("/api/auth/register", authCtlr.localRegister);
+router.post("/api/auth/login", authCtlr.localLogin);
 router.get("/api/auth/exists/:key(email|id)/:value", authCtlr.exists);
-router.post("/api/auth/logout", authCtlr.localRegister);
+router.post("/api/auth/logout", authCtlr.logout);
+router.get("/api/auth/check", authCtlr.check);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
